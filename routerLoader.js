@@ -1,6 +1,7 @@
 //routerLoader.js
 const router = require('koa-router');
 const Router = new router();
+const fs = require('fs');
 
 const User = require('./router/user');//倒入模块
 
@@ -19,10 +20,24 @@ const addRouters = (router) => {
 }
 
 /**
+ * 扫描目录
+ */
+const Scan = () => {
+    const url = './router';
+    const dir = fs.readdirSync(url)//同步方法无所谓的，因为是在服务器跑起来之前就完成映射，不会有任何性能影响
+
+    dir.forEach((filename) => {
+        const routerModel = require(url + '/' + filename);
+        addRouters(routerModel);
+    })
+}
+
+/**
  * 返回router中间件
  */
 const setRouters = () => {
-    addRouters(User);
+    // addRouters(User);  // 添加自动扫描
+    Scan();
     return Router.routes()
 }
 
