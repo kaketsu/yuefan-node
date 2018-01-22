@@ -35,9 +35,12 @@ const Scan = () => {
 /**
  * 返回router中间件
  */
-const setRouters = () => {
-    // addRouters(User);  // 添加自动扫描
-    Scan();
+const setRouters = (app) => {
+    const routers = require('./routers')(app);//在这里使用app
+    Object.keys(routers).forEach((key) => {
+        const [method, path] = key.split(' ');
+        Router[method](path, routers[key])
+    })
     return Router.routes()
 }
 
