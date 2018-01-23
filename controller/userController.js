@@ -2,7 +2,7 @@ module.exports = {
     async getUser(ctx) {
         ctx.body = 'getUser';
     },
-    async getUserInfo() {
+    async getUserInfo(ctx) {
         ctx.body = 'getUserInfo';
     }
 };
