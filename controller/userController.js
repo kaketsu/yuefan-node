@@ -1,5 +1,6 @@
 module.exports = {
-    async getUser(ctx) {
+    async getUser(ctx, services) {
+        await services.userService.storeInfo();
         ctx.body = 'getUser';
     },
     async getUserInfo(ctx) {

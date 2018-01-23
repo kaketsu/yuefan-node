@@ -1,13 +1,22 @@
 const fs = require('fs');
 
-function loadController() {
-    const url = './controller';
-    const dir = fs.readdirSync(url); // 同步方法无所谓的，因为是在服务器跑起来之前就完成映射，不会有任何性能影响
 
+function load(path) {
+    const url = path;
+    const dir = fs.readdirSync(url);
     return dir.map((filename) => {
-        const controller = require(url + '/' + filename);
-        return { name: filename.split('.')[0], controller };
+        const module = require(`${url}\\${filename}`);
+        return { name: filename.split('.')[0], module };
     })
 }
 
-module.exports = loadController;
+function loadController() {
+    const url = './controller';
+    return load(url);
+}
+
+module.exports = {
+    loadController
+}
+
+// 最后serverLoader 和 controllerLoader 变为一个loader

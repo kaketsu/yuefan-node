@@ -3,7 +3,7 @@ const router = require('koa-router');
 const Router = new router();
 const fs = require('fs');
 
-const User = require('./router/user');//倒入模块
+// const User = require('./router/user');//倒入模块
 
 /**
  * 添加router
@@ -32,14 +32,25 @@ const Scan = () => {
     })
 }
 
+const services = require('./loader').loadService();//这里引入service
+
 /**
  * 返回router中间件
  */
 const setRouters = (app) => {
     const routers = require('./routers')(app); //在这里使用app
+
+    const svs = {};
+    services.forEach((service) => {
+        svs[service.name] = service.module;
+    })
+
     Object.keys(routers).forEach((key) => {
         const [method, path] = key.split(' ');
-        Router[method](path, routers[key])
+        Router[method](path, (ctx) => {
+            const handler = routers[key];
+            handler(ctx, svs);
+        })
     })
     return Router.routes()
 }
