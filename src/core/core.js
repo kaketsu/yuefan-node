@@ -1,8 +1,16 @@
 const koa = require('koa');
 const fs = require('fs');
 const koaRoute = require('koa-router');
+const logger = require('koa-logger');
 
 class coreLoader {
+    removeString(source) {
+        const string = 'core';
+        const index = source.indexOf(string);
+        const len = string.length;
+        return source.substring(0, index);
+    }
+
     loader(path) {
         const url = path;
         const dir = fs.readdirSync(url); // 同步方法无所谓的，因为是在服务器跑起来之前就完成映射，不会有任何性能影响
@@ -13,12 +21,12 @@ class coreLoader {
     }
 
     loadController() {
-        const path = "../controller";
+        const path = this.removeString(__dirname) + "/controller";
         return this.loader(path);
     }
 
     loadService() {
-        const path = "../service";
+        const path = this.removeString(__dirname) + "./service";
         return this.loader(path);
     }
 }
@@ -27,10 +35,10 @@ class coreLoader {
 class kaketsu extends koa {
     constructor(props) {
         super(props);
+        super.use(logger());
         this.loader = new coreLoader();
         const controllers = this.loader.loadController();
-        console.log(controllers);
-        this.controller = {}
+        this.controller = {};
         controllers.forEach((ct) => {
             this.controller[ct.name] = ct.module;
         });
@@ -50,7 +58,6 @@ class kaketsu extends koa {
 
             Object.keys(routers).forEach((key) => {
                 const [method, path] = key.split(" ");
-                console.log(method, path)
                 Router[method](path, (ctx) => {
                     const handle = routers[key];
                     handle(ctx, svs);
