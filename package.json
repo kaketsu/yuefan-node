@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "mongo-start": "md mongo-db & \"C:/Program Files/MongoDB/Server/3.2/bin/mongod.exe\" --dbpath mongo-db"
+    "mongo-start": "md mongo-db & \"C:/Program Files/MongoDB/Server/3.2/bin/mongod.exe\" --dbpath mongo-db",
+    "start-inspect": "nodemon --inspect=localhost:9229 app/app.js",
+    "start": "nodemon app/app.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
   "homepage": "https://github.com/kaketsu/yuefan-node#readme",
   "dependencies": {
     "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
     "koa-logger": "^3.1.0",
     "koa-router": "^7.3.0",
     "mongodb": "^3.0.2",
