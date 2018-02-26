@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ObjectID = mongoose.Types.ObjectId;
+const MongoObjectID = mongoose.Types.ObjectId;
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
@@ -33,7 +33,7 @@ const getUserByName = async (name) => {
 
 const saveUser = async (post) => {
     const newUser = new User({
-        _id: new ObjectID(),
+        _id: new MongoObjectID(),
         ...post
     });
     return newUser.save();

@@ -2,7 +2,10 @@ const koa = require('koa');
 const router = require('koa-router');
 const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser');
+
 const userController = require('./db/userController');
+const groupController = require('./db/groupController');
+
 const config = require('./config');
 const mongoose = require('mongoose');
 
@@ -40,6 +43,12 @@ koaRouter.delete('/user/:userName', async (ctx) => {
     ctx.body = await userController.deleteUser(userName);
 })
 
+
+koaRouter.post('/group', async (ctx)=> {
+    console.log(ctx.request.body);
+    const newGroup = await groupController.saveGroup(ctx.request.body);
+    ctx.body = newGroup;
+})
 
 mongoose.connect(config.MongoConnection);
 mongoose.connection.on('error', console.error);
