@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const MongoObjectID = mongoose.Types.ObjectId;
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
@@ -23,8 +23,8 @@ const saveGroup = async (post) => {
         ...post
     });
     return newGroup.save();
-}
+};
 
 module.exports = {
     saveGroup,
-}
+};

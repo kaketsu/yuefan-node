@@ -11,7 +11,7 @@ const UserSchema = new Schema({
     address: String
 }, {
     versionKey: false
-})
+});
 
 const User = mongoose.model('User', UserSchema, 'User');
 
@@ -21,7 +21,7 @@ const getAllUsers = async ()  => {
         res = doc;
     });
     return res;
-}
+};
 
 const getUserByName = async (name) => {
     let res = null;
@@ -29,7 +29,7 @@ const getUserByName = async (name) => {
         res = doc;
     });
     return res;
-}
+};
 
 const saveUser = async (post) => {
     const newUser = new User({
@@ -37,7 +37,7 @@ const saveUser = async (post) => {
         ...post
     });
     return newUser.save();
-}
+};
 
 const updateUser = async (name, post) => {
     let res = null;
@@ -45,7 +45,7 @@ const updateUser = async (name, post) => {
         res = doc;
     });
     return res;
-}
+};
 
 const deleteUser = async (name) => {
     let res = null;
@@ -53,7 +53,7 @@ const deleteUser = async (name) => {
         res = doc;
     });
     return res;
-}
+};
 
 module.exports = {
     getAllUsers,
@@ -61,4 +61,4 @@ module.exports = {
     saveUser,
     updateUser,
     deleteUser
-}
+};
