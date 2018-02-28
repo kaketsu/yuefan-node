@@ -5,7 +5,7 @@ const ObjectId = Schema.ObjectId;
 
 const UserSchema = new Schema({
     _id: ObjectId,
-    uid: Number,
+    uid: { type: String, default: 600000 },
     name: String,
     age: Number,
     address: String
@@ -14,6 +14,26 @@ const UserSchema = new Schema({
 });
 
 const User = mongoose.model('User', UserSchema, 'User');
+
+UserSchema.pre('save', (next) => {
+    const doc = this;
+    console.log(doc);
+
+    const currentDate = new Date;
+    this.updated_at = currentDate.now;
+    next();
+    // User.findOneAndUpdate({uid: 600001}, {$inc: { seq: 1} }, {new: true, upsert: true}).then(function(user) {
+    //     console.log('...count: '+JSON.stringify(user));
+    //     doc.sort = user.seq;
+    //     next();
+    // })
+    // .catch((error) => {
+    //     console.error('counter error-> : '+error);
+    //     throw error;
+    // });
+});
+
+
 
 const getAllUsers = async ()  => {
     let res = null;

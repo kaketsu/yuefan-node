@@ -10,13 +10,25 @@ const GroupSchema = new Schema({
     location: String,
     leader: String,
     dinnerTime: Date,
-    createdBy: String,
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
     createdTime: Date
 }, {
     versionKey: false
 });
 
 const Group = mongoose.model('Group', GroupSchema, 'Group');
+
+GroupSchema.pre('save', function(next) {
+    const doc = this;
+    Group.findAndModify({_id: '5a93e35a26d9521fa8f2fa0'}, {$inc: { seq: 1} }, function(error, group)   {
+        console.log(group)
+        if (error) {
+            return next(error);
+        }
+        doc.testvalue = group.seq;
+        next();
+    });
+});
 const saveGroup = async (post) => {
     const newGroup = new Group({
         _id: new MongoObjectID(),

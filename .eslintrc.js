@@ -26,8 +26,10 @@ module.exports = {
             "single"
         ],
         "semi": [
-            "error",
+            "warn",
             "always"
-        ]
+        ],
+        "no-console": 1,
+        "linebreak-style": 0,  
     }
 };
