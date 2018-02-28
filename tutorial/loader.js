@@ -6,7 +6,7 @@ function loader(path) {
     return dir.map((filename) => {
         const module = require(url + '/' + filename);
         return { name: filename.split('.')[0], module };
-    })
+    });
 }
 
 
@@ -16,7 +16,7 @@ function loadController() {
 }
 
 function loadService() {
-    console.log(__dirname)
+    console.log(__dirname);
     const url = `${__dirname}/service`;
     return loader(url);
 }

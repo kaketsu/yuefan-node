@@ -7,7 +7,7 @@ function load(path) {
     return dir.map((filename) => {
         const module = require(`${url}\\${filename}`);
         return { name: filename.split('.')[0], module };
-    })
+    });
 }
 
 function loadController() {
@@ -17,6 +17,6 @@ function loadController() {
 
 module.exports = {
     loadController
-}
+};
 
 // 最后serverLoader 和 controllerLoader 变为一个loader

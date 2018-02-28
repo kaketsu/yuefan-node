@@ -3,8 +3,8 @@ const router = require('koa-router');
 const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser');
 
-const userController = require('./db/userController');
-const groupController = require('./db/groupController');
+const userController = require('./db/userCtrl');
+const groupController = require('./db/groupCtrl');
 
 const config = require('./config');
 const mongoose = require('mongoose');
