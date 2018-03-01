@@ -5,37 +5,37 @@ const ObjectId = Schema.ObjectId;
 
 const UserSchema = new Schema({
     _id: ObjectId,
-    uid: { type: String, default: 600000 },
+    uid: { type: Number, unique: true, index: true },
     name: String,
     age: Number,
-    address: String
+    address: String,
+    updatedTime: Date,
+    createdTime: { type: Date, default: Date.now },
 }, {
     versionKey: false
 });
 
 const User = mongoose.model('User', UserSchema, 'User');
 
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function(next) {
     const doc = this;
-    console.log(doc);
-
     const currentDate = new Date;
-    this.updated_at = currentDate.now;
-    next();
-    // User.findOneAndUpdate({uid: 600001}, {$inc: { seq: 1} }, {new: true, upsert: true}).then(function(user) {
-    //     console.log('...count: '+JSON.stringify(user));
-    //     doc.sort = user.seq;
-    //     next();
-    // })
-    // .catch((error) => {
-    //     console.error('counter error-> : '+error);
-    //     throw error;
-    // });
+    this.updatedTime = currentDate.now;
+    User.findOneAndUpdate({uid: doc.uid}, {new: false, upsert: false})
+        .then(function(user) {
+            if (user) {
+                // toDo
+            }
+            next();
+        })
+        .catch((error) => {
+            throw error;
+        });
 });
 
 
 
-const getAllUsers = async ()  => {
+const getAllUsers = async () => {
     let res = null;
     await User.find({}, (err, doc) => {
         res = doc;

@@ -8,10 +8,11 @@ const GroupSchema = new Schema({
     gId: Number,
     name: String,
     location: String,
-    leader: String,
+    leader: { type: Number, ref: 'User', required: true },
     dinnerTime: Date,
-    createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
-    createdTime: Date
+    createdBy: String,
+    createdTime: Date,
+    updatedTime: Date
 }, {
     versionKey: false
 });
@@ -20,12 +21,13 @@ const Group = mongoose.model('Group', GroupSchema, 'Group');
 
 GroupSchema.pre('save', function(next) {
     const doc = this;
-    Group.findAndModify({_id: '5a93e35a26d9521fa8f2fa0'}, {$inc: { seq: 1} }, function(error, group)   {
-        console.log(group)
+    const currentDate = new Date;
+    this.updatedTime = currentDate.now;
+    Group.findOneAndUpdate({gId: doc.gId}, {$inc: { gId: 1} }, function(error, group) {
+        console.log(group);
         if (error) {
             return next(error);
         }
-        doc.testvalue = group.seq;
         next();
     });
 });

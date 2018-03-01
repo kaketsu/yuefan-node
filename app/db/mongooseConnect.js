@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 const config = require('../config');
 
-const mongoInit = () => {
+const mongoConnect = () => {
     mongoose.connect(config.MongoConnection);
     mongoose.connection.on('error', () => {});
 }
 
-module.exports = {
-    mongoInit
-};
+module.exports = mongoConnect;
