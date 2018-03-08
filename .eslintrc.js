@@ -30,6 +30,7 @@ module.exports = {
             "always"
         ],
         "no-console": 1,
-        "linebreak-style": 0,  
+        "linebreak-style": 0,
+        "no-unused-vars": 1
     }
 };

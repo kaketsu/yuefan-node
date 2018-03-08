@@ -26,25 +26,6 @@ const query = function(sql, values) {
     });
 };
 
-const createUser = function(data) {
-    // console.log(data);
-    // const entries = data.entries();
-    // const str = [];
-    // entries.forEach((item) => {
-    //     str.push(item[0]=item[1]);
-    // });
-    
-    const _sql = `insert into user set uid=${data.uid},name='${data.name}';`;
-    return query(_sql);
-}
-const getAllUsers = function () {
-    const _sql = `
-        SELECT * FROM user
-    `;
-    return query(_sql);
-}
 module.exports = {
-    getAllUsers,
-    createUser
+    query
 };
-

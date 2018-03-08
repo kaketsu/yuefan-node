@@ -12,7 +12,7 @@ app.use(logger());
 app.use(bodyParser());
 app.use(koaRouter.routes());
 
-app.use( async (ctx) => {
+app.use(async (ctx) => {
     console.log(ctx);
     console.log(ctx.request);
 });

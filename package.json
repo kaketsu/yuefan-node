@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "mongo-start": "md mongo-db & \"C:/Program Files/MongoDB/Server/3.2/bin/mongod.exe\" --dbpath mongo-db",
     "start-inspect": "nodemon --inspect=localhost:9229 app/app.js",
-    "start": "nodemon app/app.js"
+    "start": "nodemon app/app.js",
+    "init-sql": "node ./app/init/init.js"
   },
   "repository": {
     "type": "git",

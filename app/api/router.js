@@ -3,7 +3,7 @@ const router = require('koa-router');
 const koaRouter = new router();
 
 koaRouter.get('/user', async (ctx) => {
-    const users = await mysql.getAllUsers()
+    const users = await mysql.getAllUsers();
     ctx.body = users;
 });
 
